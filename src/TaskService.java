@@ -44,4 +44,24 @@ public class TaskService {
         return sorted;
     }
 
+    public List<Task> listAll() {
+        return repository.listAll();
+    }
+
+    public void add(Task task) {
+        repository.add(task);
+    }
+
+    public void delete(int id) {
+        repository.delete(id);
+    }
+
+    public void update(int id, String field, String value) {
+        repository.update(id, field, value);
+    }
+
+    public Task getById(int id) {
+        return repository.getById(id);
+    }
+
 }
