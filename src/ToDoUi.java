@@ -64,8 +64,7 @@ public class ToDoUi {
         String desc = JOptionPane.showInputDialog(frame, "Enter Description:");
         if (desc == null) return;
 
-        Task t = new Task(0, title, desc);
-        service.add(t);
+        service.add(title, desc);
         loadTasks();
     }
 

@@ -48,8 +48,8 @@ public class TaskService {
         return repository.listAll();
     }
 
-    public void add(Task task) {
-        repository.add(task);
+    public void add(String title, String description) {
+        repository.add(title, description);
     }
 
     public void delete(int id) {

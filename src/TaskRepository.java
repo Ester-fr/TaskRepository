@@ -4,7 +4,7 @@ public class TaskRepository {
 
     private List<Task> tasks;
     private String filePath;
-
+    private int lastId = 0;
 
     public TaskRepository(String filePath) {
         this.filePath = filePath;
@@ -42,8 +42,12 @@ public class TaskRepository {
         JsonUtils.save(rawList, filePath);
     }
 
-    public void add(Task task) {
-        tasks.add(task);
+    private int nextId() {
+        return ++lastId;
+    }
+
+    public void add(String title, String description) {
+        tasks.add(new Task(nextId(), title, description));
         save();
     }
 
