@@ -34,11 +34,15 @@ public class ToDoUi {
         JButton deleteBtn = new JButton("Delete Task");
         JButton doneBtn = new JButton("Mark DONE");
         JButton searchBtn = new JButton("Search");
+        JButton sortBtn = new JButton("Sort by Status");
+        JButton updateBtn = new JButton("Update Task");
 
         panel.add(addBtn);
         panel.add(deleteBtn);
         panel.add(doneBtn);
         panel.add(searchBtn);
+        panel.add(sortBtn);
+        panel.add(updateBtn);
 
         frame.add(panel, BorderLayout.SOUTH);
 
@@ -46,7 +50,8 @@ public class ToDoUi {
         deleteBtn.addActionListener(e -> deleteTask());
         doneBtn.addActionListener(e -> markDone());
         searchBtn.addActionListener(e -> searchTasks());
-
+        sortBtn.addActionListener(e -> sortByStatus());
+        updateBtn.addActionListener(e -> update());
         frame.setVisible(true);
     }
 
@@ -93,4 +98,41 @@ public class ToDoUi {
             tableModel.addRow(new Object[]{t.getId(), t.getTitle(), t.getDescription(), t.getStatus()});
         }
     }
+
+    private void sortByStatus() {
+        List<Task> sorted = service.listSortedByStatus();
+        tableModel.setRowCount(0);
+        for (Task t : sorted) {
+            tableModel.addRow(new Object[]{t.getId(), t.getTitle(), t.getDescription(), t.getStatus()});
+        }
+    }
+
+    private void update() {
+        int row = table.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(frame, "Please select a task to update.");
+            return;
+        }
+
+        int id = Integer.parseInt(tableModel.getValueAt(row, 0).toString());
+
+        String field = JOptionPane.showInputDialog(
+                frame,
+                "Which field do you want to update? (title / description / status)"
+        );
+
+        if (field == null || field.trim().isEmpty()) return;
+
+        String newValue = JOptionPane.showInputDialog(
+                frame,
+                "Enter new value for: " + field
+        );
+
+        if (newValue == null) return;
+
+        service.update(id, field, newValue);
+
+        loadTasks();
+    }
+
 }
