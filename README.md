@@ -20,5 +20,5 @@ Allows adding, deleting, marking tasks as DONE, searching, and viewing tasks sor
 - Real-time JSON data persistence
 
 ## Notes
-- Task IDs are sequential (can be improved later)
+- Task IDs are sequential ()
 - No external libraries required
